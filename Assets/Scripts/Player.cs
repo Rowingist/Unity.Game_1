@@ -14,10 +14,9 @@ public class Player : MonoBehaviour
     private SphereCollider _sphereCollider;
     private PlayerCollisionHandler _playerCollisionHandler;
 
-    private const float _globalGravity = -9.8f;
     private int _score;
 
-    public event UnityAction<int> ScoreHasChanged;
+    public event UnityAction<int> ScoreChanged;
 
     private void Awake()
     {
@@ -44,27 +43,27 @@ public class Player : MonoBehaviour
     {
         _rigidbody.velocity = new Vector3(-_movingSpeed, _rigidbody.velocity.y);
 
-        if (!CheckIfFlying() && Input.GetKeyDown(KeyCode.Space))
+        if (IsGrounded() && Input.GetKeyDown(KeyCode.Space))
             _rigidbody.velocity = Vector3.up * _jumpVelocity;
     }
 
     private void FixedUpdate()
     {
-        Vector3 gravity = _globalGravity * _gravityScale * Vector3.up;
+        Vector3 gravity = Physics.gravity * _gravityScale;
         _rigidbody.AddForce(gravity, ForceMode.Acceleration);
     }
 
-    private bool CheckIfFlying()
+    private bool IsGrounded()
     {
         Ray groundRay = new Ray(transform.position, Vector3.down);
 
-        return Physics.SphereCast(groundRay, _sphereCollider.radius);
+        return !Physics.SphereCast(groundRay, _sphereCollider.radius);
     }
 
     public void EncreaseScore()
     {
         _score++;
-        ScoreHasChanged?.Invoke(_score);
+        ScoreChanged?.Invoke(_score);
     }
 
     public void OnDied()

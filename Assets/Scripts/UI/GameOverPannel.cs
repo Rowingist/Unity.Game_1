@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameOverPannelCotroller : MonoBehaviour
+public class GameOverPannel : MonoBehaviour
 {
     [SerializeField] private GameObject _gameOverPannel;
 
-    public void OpenPanel()
+    public void Open()
     {
         _gameOverPannel.SetActive(true);
     }

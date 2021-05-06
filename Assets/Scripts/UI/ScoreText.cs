@@ -17,12 +17,12 @@ public class ScoreText : MonoBehaviour
 
     private void OnEnable()
     {
-        _player.ScoreHasChanged += OnScoreChanged;
+        _player.ScoreChanged += OnScoreChanged;
     }
 
     private void OnDisable()
     {
-        _player.ScoreHasChanged += OnScoreChanged;
+        _player.ScoreChanged += OnScoreChanged;
     }
 
     private void OnScoreChanged(int score)

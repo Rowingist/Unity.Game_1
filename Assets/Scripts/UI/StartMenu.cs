@@ -27,8 +27,7 @@ public class StartMenu : MonoBehaviour
 
     private IEnumerator SetAnimationDelay(float delayTime, GameObject pannel)
     {
-        var delay = new WaitForSeconds(delayTime);
-        yield return delay;
+        yield return new WaitForSeconds(delayTime);
 
         pannel.SetActive(false);
     }

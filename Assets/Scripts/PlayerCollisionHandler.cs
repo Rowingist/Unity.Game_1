@@ -6,7 +6,7 @@ using UnityEngine.Events;
 [RequireComponent(typeof(Player))]
 public class PlayerCollisionHandler : MonoBehaviour
 {
-    [SerializeField] private GameOverPannelCotroller _gameOverpannelController;
+    [SerializeField] private GameOverPannel _gameOverPannel;
     [SerializeField] private Animator _animator;
 
     private Player _player;
@@ -29,7 +29,7 @@ public class PlayerCollisionHandler : MonoBehaviour
         if (collision.TryGetComponent(out Obstacle obstacle))
         {
             PlayerHasDied?.Invoke();
-            _gameOverpannelController.OpenPanel();
+            _gameOverPannel.Open();
             _animator.enabled = false;
         }
     }
