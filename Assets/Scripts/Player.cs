@@ -41,14 +41,15 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        _rigidbody.velocity = new Vector3(-_movingSpeed, _rigidbody.velocity.y);
-
         if (IsGrounded() && Input.GetKeyDown(KeyCode.Space))
             _rigidbody.velocity = Vector3.up * _jumpVelocity;
     }
 
     private void FixedUpdate()
     {
+        _rigidbody.velocity = new Vector3(-_movingSpeed, _rigidbody.velocity.y);
+
+
         Vector3 gravity = Physics.gravity * _gravityScale;
         _rigidbody.AddForce(gravity, ForceMode.Acceleration);
     }
