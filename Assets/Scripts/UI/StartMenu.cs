@@ -12,7 +12,7 @@ public class StartMenu : MonoBehaviour
 
     public void ClosePanel(GameObject pannel)
     {
-        StartCoroutine(SetAnimationDelay(1f, pannel));
+        StartCoroutine(DelayPannelDeactivation(1f, pannel));
     }
 
     public void StartGame(int sceneIndex)
@@ -25,7 +25,7 @@ public class StartMenu : MonoBehaviour
         Application.Quit();
     }
 
-    private IEnumerator SetAnimationDelay(float delayTime, GameObject pannel)
+    private IEnumerator DelayPannelDeactivation(float delayTime, GameObject pannel)
     {
         yield return new WaitForSeconds(delayTime);
 

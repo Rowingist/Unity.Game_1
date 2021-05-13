@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(SpawnTimer))]
+[RequireComponent(typeof(SpawnByTime))]
 public class Spawner : MonoBehaviour
 {
     [SerializeField] private ObjectsPool _objecstPool;
@@ -12,25 +12,12 @@ public class Spawner : MonoBehaviour
     [SerializeField] private int _distanceBetwenObjects;
     [SerializeField] private float _disableViewPortPointX;
 
-    private SpawnTimer _spawnTimer;
-
     private void Awake()
     {
-        _spawnTimer = GetComponent<SpawnTimer>();
         _objecstPool.Initialize(_spawnObjectTemplate);
     }
 
-    private void OnEnable()
-    {
-        _spawnTimer.SpawnStarted += OnObjectSpawn;
-    }
-
-    private void OnDisable()
-    {
-        _spawnTimer.SpawnStarted -= OnObjectSpawn;
-    }
-
-    private void OnObjectSpawn()
+    public void SpawnObject()
     {
         int objectGap = 0;
         int _randomSpawnPoint = Random.Range(0, _spawnPoints.Length);

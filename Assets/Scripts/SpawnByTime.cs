@@ -3,13 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class SpawnTimer : MonoBehaviour
+[RequireComponent(typeof(Spawner))]
+public class SpawnByTime : MonoBehaviour
 {
     [SerializeField] private float _timeBetweenSpawn;
-    
+
+    private Spawner _spawner;
     private float _spawnDeltaTime;
 
-    public event UnityAction SpawnStarted;
+    private void Start()
+    {
+        _spawner = GetComponent<Spawner>();
+    }
 
     private void Update()
     {
@@ -18,11 +23,11 @@ public class SpawnTimer : MonoBehaviour
         if (CompareCoinsSpawnTimes())
         {
             _spawnDeltaTime = 0f;
-            SpawnStarted?.Invoke();
+            _spawner.SpawnObject();
         }
     }
 
-    private bool CompareCoinsSpawnTimes()
+    public bool CompareCoinsSpawnTimes()
     {
         return _spawnDeltaTime > _timeBetweenSpawn;
     }
