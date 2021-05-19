@@ -4,14 +4,14 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [RequireComponent(typeof(Player))]
-public class PlayerCollisionHandler : MonoBehaviour
+public class PlayerCollision : MonoBehaviour
 {
     [SerializeField] private GameOverPannel _gameOverPannel;
     [SerializeField] private Animator _animator;
 
     private Player _player;
 
-    public event UnityAction PlayerHasDied;
+    public event UnityAction PlayerDied;
 
     private void Start()
     {
@@ -22,13 +22,13 @@ public class PlayerCollisionHandler : MonoBehaviour
     {
         if (collision.TryGetComponent(out Coin coin))
         { 
-            _player.EncreaseScore();
+            _player.AddCoin();
             coin.DestroyCoin();
         }
 
         if (collision.TryGetComponent(out Obstacle obstacle))
         {
-            PlayerHasDied?.Invoke();
+            PlayerDied?.Invoke();
             _gameOverPannel.Open();
             _animator.enabled = false;
         }

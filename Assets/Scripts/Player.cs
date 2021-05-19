@@ -3,73 +3,40 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-[RequireComponent(typeof(Rigidbody), typeof(SphereCollider), typeof(PlayerCollisionHandler))]
+[RequireComponent(typeof(PlayerMover), typeof(PlayerCollision))]
 public class Player : MonoBehaviour
 {
-    [SerializeField] private float _movingSpeed;
-    [SerializeField] private float _jumpVelocity;
-    [SerializeField] private float _gravityScale;
+    private PlayerMover _playerMover;
+    private PlayerCollision _playerCollision;
 
-    private Rigidbody _rigidbody;
-    private SphereCollider _sphereCollider;
-    private PlayerCollisionHandler _playerCollisionHandler;
+    private int _coins;
 
-    private int _score;
-
-    public event UnityAction<int> ScoreChanged;
+    public event UnityAction<int> CoinCollected;
 
     private void Awake()
     {
-        _playerCollisionHandler = GetComponent<PlayerCollisionHandler>();
+        _playerCollision = GetComponent<PlayerCollision>();
+        _playerMover = GetComponent<PlayerMover>();
     }
 
     private void OnEnable()
     {
-        _playerCollisionHandler.PlayerHasDied += OnDied;
+        _playerCollision.PlayerDied += OnDied;
     }
 
     private void OnDisable()
     {
-        _playerCollisionHandler.PlayerHasDied -= OnDied;
+        _playerCollision.PlayerDied -= OnDied;
     }
 
-    private void Start()
+    public void AddCoin()
     {
-        _rigidbody = GetComponent<Rigidbody>();
-        _sphereCollider = GetComponent<SphereCollider>();
-    }
-
-    private void Update()
-    {
-        if (IsGrounded() && Input.GetKeyDown(KeyCode.Space))
-            _rigidbody.velocity = Vector3.up * _jumpVelocity;
-    }
-
-    private void FixedUpdate()
-    {
-        _rigidbody.velocity = new Vector3(-_movingSpeed, _rigidbody.velocity.y);
-
-
-        Vector3 gravity = Physics.gravity * _gravityScale;
-        _rigidbody.AddForce(gravity, ForceMode.Acceleration);
-    }
-
-    private bool IsGrounded()
-    {
-        Ray groundRay = new Ray(transform.position, Vector3.down);
-
-        return !Physics.SphereCast(groundRay, _sphereCollider.radius);
-    }
-
-    public void EncreaseScore()
-    {
-        _score++;
-        ScoreChanged?.Invoke(_score);
+        _coins++;
+        CoinCollected?.Invoke(_coins);
     }
 
     public void OnDied()
     {
-        _movingSpeed = 0;
-        _jumpVelocity = 0;
+        _playerMover.StopMoving();
     }
 }

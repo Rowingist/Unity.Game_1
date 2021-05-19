@@ -30,11 +30,11 @@ public class ObjectsPool : MonoBehaviour
         return result != null;
     }
 
-    public void DisableObjectsOutlineTheScreen(float disablePointX, Transform disablePointY)
+    public void DisableObjectsOutlineTheScreen(float disablePointX, float disablePointY)
     {
         foreach (var item in _pool)
         {
-            Vector3 disablePoint = _camera.ViewportToWorldPoint(new Vector3(disablePointX, disablePointY.position.y));
+            Vector3 disablePoint = _camera.ViewportToWorldPoint(new Vector3(disablePointX, disablePointY));
 
             if (item.activeSelf == true)
             {

@@ -20,15 +20,10 @@ public class SpawnByTime : MonoBehaviour
     {
         _spawnDeltaTime += Time.deltaTime;
 
-        if (CompareCoinsSpawnTimes())
+        if (_spawnDeltaTime > _timeBetweenSpawn)
         {
             _spawnDeltaTime = 0f;
             _spawner.SpawnObject();
         }
-    }
-
-    public bool CompareCoinsSpawnTimes()
-    {
-        return _spawnDeltaTime > _timeBetweenSpawn;
-    }
+    }   
 }

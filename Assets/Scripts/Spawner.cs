@@ -30,7 +30,7 @@ public class Spawner : MonoBehaviour
                 spawnObject.transform.position = _spawnPoints[_randomSpawnPoint].transform.position + new Vector3(objectGap, 0, 0);
                 objectGap += _distanceBetwenObjects;
                 
-                _objecstPool.DisableObjectsOutlineTheScreen(_disableViewPortPointX, gameObject.transform);
+                _objecstPool.DisableObjectsOutlineTheScreen(_disableViewPortPointX, transform.position.y);
             }
         }
     }
