@@ -1,0 +1,36 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Events;
+
+[RequireComponent(typeof(Player))]
+public class PlayerCollision : MonoBehaviour
+{
+    [SerializeField] private GameOverPannel _gameOverPannel;
+    [SerializeField] private Animator _animator;
+
+    private Player _player;
+
+    public event UnityAction PlayerDied;
+
+    private void Start()
+    {
+        _player = GetComponent<Player>();
+    }
+
+    private void OnTriggerEnter(Collider collision)
+    {
+        if (collision.TryGetComponent(out Coin coin))
+        { 
+            _player.AddCoin();
+            coin.DestroyCoin();
+        }
+
+        if (collision.TryGetComponent(out Obstacle obstacle))
+        {
+            PlayerDied?.Invoke();
+            _gameOverPannel.Open();
+            _animator.enabled = false;
+        }
+    }
+}
